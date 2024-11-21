@@ -2,18 +2,17 @@
 Write a function called extractValue which accepts an array of objects and a key and returns a new array with the value of each object at the key.
 
 Examples:
-    const arr = [{name: 'Elie'}, {name: 'Tim'}, {name: 'Matt'}, {name: 'Colt'}]
-    extractValue(arr,'name') // ['Elie', 'Tim', 'Matt', 'Colt']
+    // const arr = [{name: 'Elie'}, {name: 'Tim'}, {name: 'Matt'}, {name: 'Colt'}]
+    // extractValue(arr,'name') // ['Elie', 'Tim', 'Matt', 'Colt']
 */
 
 function extractValue(arr, key) {
-    return arr.reduce(function (acc, next){
+    return arr.reduce(function(acc, next){
         acc.push(next[key]);
         return acc ;
-    }, []);
+    },[]);
 
-    
-}
+};
 
 /*
 Write a function called vowelCount which accepts a string and returns an object with the keys as the vowel and the values as the number of times the vowel appears in the string. This function should be case insensitive so a lowercase letter and uppercase letter should count
@@ -26,22 +25,19 @@ Examples:
     vowelCount('I Am awesome and so are you') // {i: 1, a: 4, e: 3, o: 3, u: 1};
 */
 
-function vowelCount(str) {
-
-     const vowels = "aeiou";
-     return str.split('').reduce.(function(acc, next){
-        let lowercase = next.toLowerCase()
-        if ( vowels.indexOf(lowercase) !== -1){
-            if(acc[lowercase]){
-                acc[lowercase] ++;
-            }
-            else {
-                acc [lowercase] = 1;
-            }
+function vowelCount(str){
+    const vowels = "aeiou";
+    return str
+    .toLowerCase()// makes string case-insitive
+    .split('')//split the string into individiual characthers
+    .reduce(function( acc, next ){
+        if(vowels.indexOf(next) !== -1){// checks if character is a vowel
+            acc[next] = (acc[next] || 0) + 1; //adds to the count for the vowl
+    
         }
-        return acc ;
-     })
-}
+        return acc;
+    }, {}); // starts with an empty object
+};
 
 /*
 Write a function called addKeyAndValue which accepts an array of objects and returns the array of objects passed to it with each object now including the key and value passed to the function.
@@ -58,7 +54,13 @@ Examples:
        ]
 */
 
-function addKeyAndValue(arr, key, value) {}
+function addKeyAndValue(arr, key, value) {
+    return arr.reduce(function(acc, next, idx){
+        acc[idx][key] = value;
+        return acc;
+    },arr);
+   
+}
 
 /*
 Write a function called partition which accepts an array and a callback and returns an array with two arrays inside of it. The partition function should run the callback function on each value in the array and if the result of the callback function at that specific value is true, the value should be placed in the first subarray. If the result of the callback function at that specific value is false, the value should be placed in the second subarray. 
@@ -82,4 +84,13 @@ Examples:
     partition(names, isLongerThanThreeCharacters) // [['Elie', 'Colt', 'Matt'], ['Tim']]
 */
 
-function partition(arr, callback) {}
+function partition(arr, callback) {
+    return arr.reduce(function(acc, next){
+        if(callback(next)){
+            acc[0].push(next);
+        } else {
+            acc[1].push(next);
+        }
+        return acc;
+    }, [[], []]);
+}
